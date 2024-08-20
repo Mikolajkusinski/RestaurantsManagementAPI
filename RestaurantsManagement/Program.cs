@@ -5,9 +5,9 @@ using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.ClearProviders();
-builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
-builder.Host.UseNLog();
+// builder.Logging.ClearProviders();
+// builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+// builder.Host.UseNLog();
 
 // Configure service
 builder.Services.AddControllers();
@@ -21,6 +21,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<RequestTimeMiddleware>();
+builder.Services.AddScoped<IDishService, DishService>();
 
 // Configure
 var app = builder.Build();

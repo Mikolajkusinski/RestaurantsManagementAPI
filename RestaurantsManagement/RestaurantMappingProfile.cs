@@ -22,5 +22,7 @@ public class RestaurantMappingProfile : Profile
                         PostalCode = dto.PostalCode
                     })
             );
+
+        CreateMap<CreateDishDto, Dish>();
     }
 }

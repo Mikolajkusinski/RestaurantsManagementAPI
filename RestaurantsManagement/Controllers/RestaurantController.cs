@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 [Route("api/restaurant")]
+[ApiController]
 public class RestaurantController : ControllerBase
 {
     private readonly IRestaurantService _restaurantService;
@@ -25,22 +26,12 @@ public class RestaurantController : ControllerBase
     {
         var restaurant = _restaurantService.GetById(id);
 
-        if (restaurant is null)
-        {
-            return NotFound();
-        }
-
         return Ok(restaurant);
     }
 
     [HttpPost]
     public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var id = _restaurantService.Create(dto);
 
         return Created($"/api/restaurant/{id}", null);
@@ -49,30 +40,15 @@ public class RestaurantController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete([FromRoute] int id)
     {
-        bool isDeleted = _restaurantService.Delete(id);
+        _restaurantService.Delete(id);
 
-        if (isDeleted)
-        {
-            return NoContent();
-        }
-
-        return NotFound();
+        return NoContent();
     }
 
     [HttpPut("{id}")]
     public ActionResult Update([FromBody] UpdateRestaurantDto dto, [FromRoute] int id)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        var isUpdated = _restaurantService.Update(id, dto);
-
-        if (!isUpdated)
-        {
-            return NotFound();
-        }
+        _restaurantService.Update(id, dto);
 
         return Ok();
     }

@@ -13,6 +13,10 @@ public class ErrorHandlingMiddleware : IMiddleware
         {
             await next.Invoke(context);
         }
+        catch (ForbidException forbidException)
+        {
+            context.Response.StatusCode = 403;
+        }
         catch (BadRequestException BadRequestException)
         {
             _logger.LogError(BadRequestException, BadRequestException.Message);

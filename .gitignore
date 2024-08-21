@@ -2,3 +2,5 @@ RestaurantsManagement/appsettings.json
 RestaurantsManagement/appsettings.Development.json
 RestaurantsManagement/bin
 RestaurantsManagement/obj
+RestaurantsManagement/nlog.config
+RestaurantsManagement/Logs

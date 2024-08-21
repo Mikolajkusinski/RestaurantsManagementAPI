@@ -13,6 +13,13 @@ public class ErrorHandlingMiddleware : IMiddleware
         {
             await next.Invoke(context);
         }
+        catch (BadRequestException BadRequestException)
+        {
+            _logger.LogError(BadRequestException, BadRequestException.Message);
+
+            context.Response.StatusCode = 400;
+            await context.Response.WriteAsync(BadRequestException.Message);
+        }
         catch (NotFoundException notFoundException)
         {
             _logger.LogError(notFoundException, notFoundException.Message);

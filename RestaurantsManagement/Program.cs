@@ -65,6 +65,7 @@ builder.Services.AddScoped<RequestTimeMiddleware>();
 builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddScoped<IValidator<RestaurantQuery>, RestaurantQueryValidator>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IDishService, DishService>();

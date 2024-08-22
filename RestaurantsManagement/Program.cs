@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -72,6 +73,19 @@ builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        "FrontEndClient",
+        policyBuilder =>
+        {
+            policyBuilder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins(builder.Configuration["AllowedOrigins"]);
+        }
+    );
+});
 
 // Configure
 var app = builder.Build();
@@ -85,7 +99,7 @@ if (pendingMigrations.Any())
 {
     dbContext.Database.Migrate();
 }
-
+app.UseCors("FrontEndClient");
 seeder.Seed();
 
 if (app.Environment.IsDevelopment())
